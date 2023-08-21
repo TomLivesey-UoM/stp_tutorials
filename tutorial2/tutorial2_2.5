@@ -1,0 +1,31 @@
+#!usr/bin/python
+
+def Counter(seq):
+    message = ''
+
+    # Single bases 1st:
+    for c in set(seq):
+        message += f"{c}: {seq.count(c)}\n"
+    message += '\n'
+
+    # Dinucleotides 2nd:
+    di_list = [seq[i:i+2] for i in range(0, len(seq), 2)]
+    for di in set(di_list):
+        if len(di) == 2:
+            message += f"{di}: {di_list.count(di)}\n"
+        else:
+            continue
+    message += '\n'
+
+    # Trinucleotides last:
+    tri_list = [seq[i:i+3] for i in range(0, len(seq), 3)]
+    for tri in set(tri_list):
+            if len(tri) == 3:
+                 message += f"{tri}: {tri_list.count(tri)}\n"
+            else:
+                 continue
+    
+    print(message)
+
+
+Counter("aggagtaagcccttgcaactggaaatacacccattg")

@@ -1,0 +1,18 @@
+#!usr/bin/python
+
+def reverse_comp(seq):
+    reverse_dict = {'C':'T',
+                    'T':'C',
+                    'A':'G',
+                    'G':'A'}
+    
+    seq = seq.upper()
+    reverse = ""
+    for base in seq:
+        for k,v in reverse_dict.items():
+            if base in v:
+                reverse += k
+    
+    print(reverse)
+
+reverse_comp('aggagtaagcccttgcaactggaaatacacccattg')

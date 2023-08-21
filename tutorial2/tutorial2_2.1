@@ -1,0 +1,45 @@
+#!usr/bin/python
+import os
+
+def DNA_split(seq, block_size, blocks_per_row):
+    seq = seq.lower()
+    blocks = ""
+    block = 0
+    
+    # Get a list of the blocks of the right size:
+    for c in seq:
+        if block != block_size:
+            blocks += c
+            block += 1
+        else:
+            blocks += f" {c}"
+            block = 1
+    blocks = blocks.split(' ')
+
+    # Get the correct number of blocks per line:
+    def chunker(list, chunk_size):
+        for i in range(0, len(list), chunk_size):
+            yield list[i:i+chunk_size]
+    
+    # Count up the total number of chars for aligning the files:
+    char_no_counter = 1
+    for chunk in chunker(blocks, blocks_per_row):
+        char_no_counter += len(''.join(chunk))
+    
+    digits = len(str(char_no_counter))
+    
+    # Write chunks in the correct numbers with counts to a file:
+    file = open("output_2.1.txt", "a+")
+    char_no = 1
+    for chunk in chunker(blocks, blocks_per_row):
+        chars_to_add = str(char_no)
+        while len(chars_to_add) < len(str(char_no_counter)):
+            chars_to_add += ' '
+        file.write(f"{chars_to_add} {' '.join(chunk)}")
+        file.write('\n\n')
+        char_no += len(''.join(chunk))
+
+
+string = "GCTGAGACTTCCTGGACGGGGGACAGGCTGTGGGGTTTCTCAGATAACTGGGCCCCTGCGCTCAGGAGGCCTTCACCCTCTGCTCTGGGTAAAGTTCATTGGAACAGAAAGAAATGGATTTATCTGCTCTTCGCGTTGAAGAAGTACAAAATGTCATTAATGCTATGCAGAAAATCTTAGAGTGTCCCATCTGTCTGGAGTTGATCAAGGAACCTGTCTCCACAAAGTGTGACCACATATTTTGCAAATTTTGCATGCTGAAACTTCTCAACCAGAAGAAAGGGCCTTCACAGTGTCCTTTATGTAAGAATGATATAACCAAAAGAGCCTACAAGAAAGTACGAGATTTAGTCAACTTGTTGAAGAGCTATTGAAAATCATTTGTGCTTTTCAGCTTGACACAGGTTTGGAGTATGCAAACAGCTATAATTTTGCAAAAAAGGAAAATAACTCTCCTGAACATCTAAAAGATGAAGTTTCTATCATCCAAAGTATGGGCTACAGAAACCGTGCCAAAAGACTTCTACAGAGTGAACCCGAAAATCCTTCCTTGCAGGAAACCAGTCTCAGTGTCCAACTCTCTAACCTTGGAACTGTGAGAACTCTGAGGACAAAGCAGCGGATACAACCTCAAAAGACGTCTGTCTACATTGAATTGGGATCTGATTCTTCTGAAGATACCGTTAATAAGGCAACTTATTGCAGTGTGGGAGATCAAG"
+
+DNA_split(string, 10, 6)
