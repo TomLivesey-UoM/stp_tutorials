@@ -3,6 +3,7 @@
 # Create a dictionary for codons:
 
 def translate(seq):
+    # Having a longer dict w/ codons as keys removes the need for the k,v loop and so is faster:
     codon_dict = {'F':['TTT', 'TTC'],
                 'L':['TTA', 'TTG', 'CTT', 'CTC', 'CTA', 'CTG'],
                 'I':['ATT', 'ATC', 'ATA'],
